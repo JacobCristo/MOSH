@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://d1sifqxot6hd3"]
+
+[ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_7g3or"]
+[ext_resource type="Texture2D" uid="uid://2tditaoqfafl" path="res://Assets/MOSH_Goblin.png" id="1_l4wl6"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j35xk"]
+radius = 13.0
+
+[node name="enemy_goblin" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("1_7g3or")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_l4wl6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 8)
+shape = SubResource("CapsuleShape2D_j35xk")
