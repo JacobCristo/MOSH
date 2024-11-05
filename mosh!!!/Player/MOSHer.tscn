@@ -75,9 +75,9 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w40ld"]
 radius = 13.0
-height = 34.0
+height = 26.0
 
-[node name="MOSHer" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
 script = ExtResource("2_h2odc")
 
@@ -88,7 +88,12 @@ animation = &"walk"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.75, 0.75)
+limit_left = -990
+limit_top = -540
+limit_right = 990
+limit_bottom = 540
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, 1)
+position = Vector2(3, 6)
 shape = SubResource("CapsuleShape2D_w40ld")
