@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bjnvaf4p5g5k1"
-path="res://.godot/imported/MOSHer.png-8a3ba320e7c100b1a7f655211855ded2.ctex"
+uid="uid://dn8d6jgqlao0f"
+path="res://.godot/imported/WizardMosher.png-fad40458686f3a6022234c965dec57e7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/MOSHer.png"
-dest_files=["res://.godot/imported/MOSHer.png-8a3ba320e7c100b1a7f655211855ded2.ctex"]
+source_file="res://Assets/WizardMosher.png"
+dest_files=["res://.godot/imported/WizardMosher.png-fad40458686f3a6022234c965dec57e7.ctex"]
 
 [params]
 
