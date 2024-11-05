@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://x7pogqps41i4"]
+[gd_scene load_steps=17 format=3 uid="uid://x7pogqps41i4"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="2_h2odc"]
 [ext_resource type="Texture2D" uid="uid://cjtkcrg2jh07r" path="res://Assets/WizardMosher_Idle.png" id="2_rhao5"]
 [ext_resource type="Texture2D" uid="uid://dgss418656xr8" path="res://Assets/WizardMosher_Walk.png" id="3_pydlp"]
+[ext_resource type="PackedScene" uid="uid://xy1bu0mb6bng" path="res://Utility/hurtbox.tscn" id="4_nhxuu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6xlta"]
 atlas = ExtResource("2_rhao5")
@@ -75,7 +76,11 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w40ld"]
 radius = 13.0
-height = 26.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_070yl"]
+size = Vector2(26, 31)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pla0n"]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
@@ -88,12 +93,42 @@ animation = &"walk"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.75, 0.75)
-limit_left = -990
-limit_top = -540
-limit_right = 990
-limit_bottom = 540
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3, 6)
+position = Vector2(3, 4)
 shape = SubResource("CapsuleShape2D_w40ld")
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_nhxuu")]
+position = Vector2(-51, 22)
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(54, -18.5)
+shape = SubResource("RectangleShape2D_070yl")
+
+[node name="Attack" type="Node2D" parent="."]
+
+[node name="IceSpearTimer" type="Timer" parent="Attack"]
+unique_name_in_owner = true
+wait_time = 1.5
+
+[node name="IceSpearAttackTimer" type="Timer" parent="Attack/IceSpearTimer"]
+unique_name_in_owner = true
+wait_time = 0.075
+
+[node name="EnemyDetectionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea"]
+scale = Vector2(36.84, 36.84)
+shape = SubResource("CircleShape2D_pla0n")
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+[connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
+[connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
+[connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
+[connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
+
+[editable path="Hurtbox"]
