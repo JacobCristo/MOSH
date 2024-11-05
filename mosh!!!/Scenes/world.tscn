@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://clki5b6lymmhy"]
+
+[ext_resource type="Texture2D" uid="uid://ctu55fde3nfvb" path="res://Assets/MOSH_SandTexture.png" id="1_rw4g0"]
+[ext_resource type="PackedScene" uid="uid://x7pogqps41i4" path="res://Player/MOSHer.tscn" id="2_s8sc5"]
+
+[node name="World" type="Node2D"]
+
+[node name="BG" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(3, 3)
+texture = ExtResource("1_rw4g0")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 214, 120)
+
+[node name="MOSHer" parent="." instance=ExtResource("2_s8sc5")]

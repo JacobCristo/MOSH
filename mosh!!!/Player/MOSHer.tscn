@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://x7pogqps41i4"]
+
+[ext_resource type="Texture2D" uid="uid://bjnvaf4p5g5k1" path="res://Assets/MOSHer.png" id="1_lemhj"]
+[ext_resource type="Script" path="res://Player/player.gd" id="2_h2odc"]
+
+[node name="MOSHer" type="CharacterBody2D"]
+motion_mode = 1
+script = ExtResource("2_h2odc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lemhj")
