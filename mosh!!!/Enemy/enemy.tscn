@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://xy1bu0mb6bng" path="res://Utility/hurtbox.tscn" id="3_j2l4d"]
 [ext_resource type="PackedScene" uid="uid://c3fc5p4o3pqdi" path="res://Utility/hitbox.tscn" id="4_8gh1w"]
 [ext_resource type="AudioStream" uid="uid://3ca6hlhfuxbj" path="res://Audio/enemy_hit.mp3" id="5_ot7ex"]
-[ext_resource type="AudioStream" uid="uid://bveiijbpsb52r" path="res://Audio/goblin_death.mp3" id="7_6qbx4"]
+[ext_resource type="AudioStream" uid="uid://bveiijbpsb52r" path="res://Audio/enemy_death.mp3" id="7_6qbx4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8nf56"]
 atlas = ExtResource("2_cw0y2")
