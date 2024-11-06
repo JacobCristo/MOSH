@@ -106,6 +106,15 @@ collision_mask = 2
 position = Vector2(54, -18.5)
 shape = SubResource("RectangleShape2D_070yl")
 
+[node name="EnemyDetectionArea" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea"]
+scale = Vector2(36.84, 36.84)
+shape = SubResource("CircleShape2D_pla0n")
+
 [node name="Attack" type="Node2D" parent="."]
 
 [node name="IceSpearTimer" type="Timer" parent="Attack"]
@@ -116,19 +125,10 @@ wait_time = 1.5
 unique_name_in_owner = true
 wait_time = 0.075
 
-[node name="EnemyDetectionArea" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 4
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetectionArea"]
-scale = Vector2(36.84, 36.84)
-shape = SubResource("CircleShape2D_pla0n")
-
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
-[connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
-[connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
+[connection signal="timeout" from="Attack/IceSpearTimer" to="." method="_on_ice_spear_timer_timeout"]
+[connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
 
 [editable path="Hurtbox"]

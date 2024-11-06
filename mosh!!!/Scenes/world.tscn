@@ -30,7 +30,7 @@ texture_repeat = 2
 scale = Vector2(3, 3)
 texture = ExtResource("1_rw4g0")
 region_enabled = true
-region_rect = Rect2(0, 0, 660, 360)
+region_rect = Rect2(0, 0, 1e+07, 1e+07)
 
 [node name="Player" parent="." instance=ExtResource("2_s8sc5")]
 

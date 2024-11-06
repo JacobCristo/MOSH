@@ -12,7 +12,7 @@ var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
 
 #Ice Spear
 var icespear_ammo = 0
-var icespear_baseammo = 5
+var icespear_baseammo = 1
 var icespear_attackspeed = 1.5
 var icespear_level = 1
 
@@ -50,7 +50,7 @@ func attack():
 		if iceSpearTimer.is_stopped():
 			iceSpearTimer.start()	
 			
-func _on_hurtbox_hurt(damage: Variant) -> void:
+func _on_hurtbox_hurt(damage: Variant, _angle:Variant, _knockback:Variant) -> void:
 	hp -= damage
 	print(hp)
 
@@ -76,7 +76,6 @@ func get_random_target():
 		return enemy_close.pick_random().global_position
 	else:
 		return Vector2.UP
-
 
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 	if not enemy_close.has(body):
