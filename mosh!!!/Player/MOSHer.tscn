@@ -146,6 +146,13 @@ wait_time = 0.2
 [node name="JavelinBase" type="Node2D" parent="Attack"]
 unique_name_in_owner = true
 
+[node name="FireballTimer" type="Timer" parent="Attack"]
+unique_name_in_owner = true
+
+[node name="FireballAttackTimer" type="Timer" parent="Attack/FireballTimer"]
+unique_name_in_owner = true
+wait_time = 0.4
+
 [node name="GrabArea" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
@@ -226,6 +233,8 @@ volume_db = -20.0
 [connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
 [connection signal="timeout" from="Attack/TornadoTimer" to="." method="_on_tornado_timer_timeout"]
 [connection signal="timeout" from="Attack/TornadoTimer/TornadoAttackTimer" to="." method="_on_tornado_attack_timer_timeout"]
+[connection signal="timeout" from="Attack/FireballTimer" to="." method="_on_fireball_timer_timeout"]
+[connection signal="timeout" from="Attack/FireballTimer/FireballAttackTimer" to="." method="_on_fireball_attack_timer_timeout"]
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
 

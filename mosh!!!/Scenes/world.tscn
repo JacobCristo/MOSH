@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://clki5b6lymmhy"]
+[gd_scene load_steps=8 format=3 uid="uid://clki5b6lymmhy"]
 
 [ext_resource type="Texture2D" uid="uid://ctu55fde3nfvb" path="res://Assets/MOSH_SandTexture.png" id="1_rw4g0"]
 [ext_resource type="PackedScene" uid="uid://x7pogqps41i4" path="res://Player/MOSHer.tscn" id="2_s8sc5"]
 [ext_resource type="PackedScene" uid="uid://d1sifqxot6hd3" path="res://Enemy/enemy.tscn" id="3_wr36e"]
 [ext_resource type="PackedScene" uid="uid://df8eemgejeu3l" path="res://Utility/enemy_spawner.tscn" id="4_3mmpt"]
 [ext_resource type="Script" path="res://Utility/spawn_info.gd" id="5_qgr7d"]
-[ext_resource type="PackedScene" uid="uid://cdpj4wyvvkcg0" path="res://Objects/experience_gem.tscn" id="6_pabqr"]
 
 [sub_resource type="Resource" id="Resource_cnvw2"]
 script = ExtResource("5_qgr7d")
@@ -31,7 +30,7 @@ texture_repeat = 2
 scale = Vector2(3, 3)
 texture = ExtResource("1_rw4g0")
 region_enabled = true
-region_rect = Rect2(0, 0, 1e+07, 1e+07)
+region_rect = Rect2(0, 0, 640000, 360000)
 
 [node name="Player" parent="." instance=ExtResource("2_s8sc5")]
 
@@ -39,7 +38,3 @@ region_rect = Rect2(0, 0, 1e+07, 1e+07)
 spawns = Array[ExtResource("5_qgr7d")]([SubResource("Resource_cnvw2"), SubResource("Resource_1gbq4")])
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
-
-[node name="ExperienceGem" parent="." instance=ExtResource("6_pabqr")]
-position = Vector2(116, -48)
-experience = 10

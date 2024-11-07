@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://due0m87pa8nlk"]
+
+[ext_resource type="Script" path="res://Player/Attack/fireball.gd" id="1_0gb5m"]
+[ext_resource type="Texture2D" uid="uid://bavi6du0c6jaf" path="res://Assets/MOSH_Fireball-Explosion-Sheet.png" id="1_ntpj1"]
+[ext_resource type="Texture2D" uid="uid://ifwy58bb7brq" path="res://Assets/MOSH_Fireball.png" id="2_gko5c"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gkybt"]
+atlas = ExtResource("1_ntpj1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f6e35"]
+atlas = ExtResource("1_ntpj1")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5mls"]
+atlas = ExtResource("1_ntpj1")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7m4ol"]
+atlas = ExtResource("1_ntpj1")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7gk7"]
+atlas = ExtResource("2_gko5c")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pgi1l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gkybt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f6e35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5mls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7m4ol")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7gk7")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dexmn"]
+radius = 10.0
+height = 20.0
+
+[node name="Fireball" type="Area2D" groups=["attack"]]
+top_level = true
+scale = Vector2(0.1, 0.1)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_0gb5m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pgi1l")
+animation = &"fire"
+autoplay = "fire"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(7.10543e-15, -3.55271e-15)
+shape = SubResource("CapsuleShape2D_dexmn")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

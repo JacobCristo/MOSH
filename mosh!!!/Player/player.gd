@@ -12,6 +12,7 @@ var collected_experience = 0
 var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
 var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
+var fireball = preload("res://Player/Attack/fireball.tscn")
 
 #Attack Nodes
 @onready var iceSpearTimer = get_node("%IceSpearTimer")
@@ -19,6 +20,8 @@ var javelin = preload("res://Player/Attack/javelin.tscn")
 @onready var tornadoTimer = get_node("%TornadoTimer")
 @onready var tornadoAttackTimer = get_node("%TornadoAttackTimer")
 @onready var javelin_base = get_node("%JavelinBase")
+@onready var fireballTimer = get_node("%FireballTimer")
+@onready var fireballAttackTimer = get_node("%FireballAttackTimer")
 
 #Ice Spear
 var icespear_ammo = 0
@@ -35,6 +38,12 @@ var tornado_level = 1
 #Javelin
 var javelin_ammo = 2
 var javelin_level = 1
+
+#Fireball
+var fireball_ammo = 0
+var fireball_baseammo = 2
+var fireball_attackspeed = 1.0
+var fireball_level = 1
 
 #Enemy Related
 var enemy_close = []
@@ -86,6 +95,10 @@ func attack():
 			tornadoTimer.start()	
 	if javelin_level > 0:
 		spawn_javelin()
+	if fireball_level > 0:
+		fireballTimer.wait_time = fireball_attackspeed
+		if fireballTimer.is_stopped():
+			fireballTimer.start()
 			
 func _on_hurtbox_hurt(damage: Variant, _angle:Variant, _knockback:Variant) -> void:
 	hp -= damage
@@ -125,6 +138,24 @@ func _on_tornado_attack_timer_timeout() -> void:
 		else:
 			tornadoAttackTimer.stop()
 			
+func _on_fireball_timer_timeout() -> void:
+	fireball_ammo += fireball_baseammo
+	fireballAttackTimer.start()
+
+
+func _on_fireball_attack_timer_timeout() -> void:
+	if fireball_ammo > 0:
+		var fireball_attack = fireball.instantiate()
+		fireball_attack.position = position
+		fireball_attack.target = get_random_target()
+		fireball_attack.level = fireball_level
+		add_child(fireball_attack)
+		fireball_ammo -= 1
+		if fireball_ammo > 0:
+			fireballAttackTimer.start()
+		else:
+			fireballAttackTimer.stop()
+			
 func spawn_javelin():
 	var get_javelin_total = javelin_base.get_child_count()
 	var calc_spawns = javelin_ammo - get_javelin_total
@@ -161,7 +192,7 @@ func calculate_experience_cap():
 	if level < 20:
 		exp_cap = level * 5
 	elif level < 40:
-		exp_cap + 95 * (level - 19) * 8
+		exp_cap = 95 * (level - 19) * 8
 	else:
 		exp_cap = 255 + (level - 39) * 12
 	return exp_cap
