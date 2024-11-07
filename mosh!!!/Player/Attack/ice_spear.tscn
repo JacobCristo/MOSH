@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://junmp30s8rm1"]
 
-[ext_resource type="Texture2D" uid="uid://c6754hkftl281" path="res://Assets/MOSH_IceSpear.png" id="1_iefkn"]
+[ext_resource type="Texture2D" uid="uid://c6754hkftl281" path="res://Assets/Weapons/MOSH_IceSpear.png" id="1_iefkn"]
 [ext_resource type="Script" path="res://Player/Attack/ice_spear.gd" id="1_mdl3i"]
 [ext_resource type="AudioStream" uid="uid://l1n57op8pxxs" path="res://Audio/icespear_cast.mp3" id="3_r42wh"]
 

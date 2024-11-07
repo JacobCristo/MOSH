@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bavi6du0c6jaf"
-path="res://.godot/imported/MOSH_Fireball-Explosion-Sheet.png-8c72e90ed67f8f0ccb2f2669696018fb.ctex"
+uid="uid://dycbwy6u3nehk"
+path="res://.godot/imported/helmet.png-6416757168a718de04b5e117017244bf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/MOSH_Fireball-Explosion-Sheet.png"
-dest_files=["res://.godot/imported/MOSH_Fireball-Explosion-Sheet.png-8c72e90ed67f8f0ccb2f2669696018fb.ctex"]
+source_file="res://Assets/Upgrades/helmet.png"
+dest_files=["res://.godot/imported/helmet.png-6416757168a718de04b5e117017244bf.ctex"]
 
 [params]
 

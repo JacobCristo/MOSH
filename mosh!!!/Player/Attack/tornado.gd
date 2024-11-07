@@ -18,12 +18,18 @@ signal remove_from_array(object)
 
 func _ready() -> void:
 	match level:
-		1:
+		1, 2, 3:
 			hp = 999
 			speed = 100
 			damage = 5
 			knock_amount = 100
-			attack_size = 1.0
+			attack_size = 1.0 * (1 + player.spell_size)
+		4:
+			hp = 999
+			speed = 100
+			damage = 5
+			knock_amount = 125
+			attack_size = 1.0 * (1 + player.spell_size)
 	
 	var move_to_less = Vector2.ZERO
 	var move_to_more = Vector2.ZERO

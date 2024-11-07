@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dmvxn2pcxpw3p"
-path="res://.godot/imported/MOSH_Javelin_Attack.png-b5a375348b695905d4de8ca0d5962d76.ctex"
+uid="uid://ccbnre56pp1yg"
+path="res://.godot/imported/scroll.png-baafe54faf4ae5e0b3ca36fbb3810046.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/MOSH_Javelin_Attack.png"
-dest_files=["res://.godot/imported/MOSH_Javelin_Attack.png-b5a375348b695905d4de8ca0d5962d76.ctex"]
+source_file="res://Assets/Upgrades/scroll.png"
+dest_files=["res://.godot/imported/scroll.png-baafe54faf4ae5e0b3ca36fbb3810046.ctex"]
 
 [params]
 

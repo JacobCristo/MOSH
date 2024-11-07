@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://2nwohrf8yl8n"]
 
 [ext_resource type="Script" path="res://Player/Attack/javelin.gd" id="1_6rcwf"]
-[ext_resource type="Texture2D" uid="uid://h5cyvlcw7sue" path="res://Assets/MOSH_Javelin.png" id="1_dbe8v"]
+[ext_resource type="Texture2D" uid="uid://h5cyvlcw7sue" path="res://Assets/Weapons/MOSH_Javelin.png" id="1_dbe8v"]
 [ext_resource type="AudioStream" uid="uid://jffmjs25otyw" path="res://Audio/javelin_swoosh.mp3" id="3_dnlvt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wjrrf"]

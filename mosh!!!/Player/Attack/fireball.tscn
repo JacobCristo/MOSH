@@ -1,24 +1,30 @@
-[gd_scene load_steps=11 format=3 uid="uid://due0m87pa8nlk"]
+[gd_scene load_steps=14 format=3 uid="uid://due0m87pa8nlk"]
 
 [ext_resource type="Script" path="res://Player/Attack/fireball.gd" id="1_0gb5m"]
-[ext_resource type="Texture2D" uid="uid://bavi6du0c6jaf" path="res://Assets/MOSH_Fireball-Explosion-Sheet.png" id="1_ntpj1"]
-[ext_resource type="Texture2D" uid="uid://ifwy58bb7brq" path="res://Assets/MOSH_Fireball.png" id="2_gko5c"]
+[ext_resource type="Texture2D" uid="uid://bavi6du0c6jaf" path="res://Assets/Weapons/MOSH_Fireball-Explosion-Sheet.png" id="1_ntpj1"]
+[ext_resource type="Texture2D" uid="uid://ifwy58bb7brq" path="res://Assets/Weapons/MOSH_Fireball.png" id="2_gko5c"]
+[ext_resource type="AudioStream" uid="uid://7q1dyjmba1fs" path="res://Audio/fireball_explosion.mp3" id="4_u55ov"]
+[ext_resource type="AudioStream" uid="uid://bed52gxfpctjj" path="res://Audio/fireball_throw.mp3" id="4_u62co"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gkybt"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3frx"]
 atlas = ExtResource("1_ntpj1")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f6e35"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_s68je"]
 atlas = ExtResource("1_ntpj1")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f5mls"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7rbf"]
 atlas = ExtResource("1_ntpj1")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_7m4ol"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_314br"]
 atlas = ExtResource("1_ntpj1")
 region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tpdu"]
+atlas = ExtResource("1_ntpj1")
+region = Rect2(64, 0, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_r7gk7"]
 atlas = ExtResource("2_gko5c")
@@ -28,16 +34,19 @@ region = Rect2(0, 0, 16, 16)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gkybt")
+"texture": SubResource("AtlasTexture_n3frx")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f6e35")
+"texture": SubResource("AtlasTexture_s68je")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f5mls")
+"texture": SubResource("AtlasTexture_x7rbf")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7m4ol")
+"texture": SubResource("AtlasTexture_314br")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tpdu")
 }],
 "loop": false,
 "name": &"explosion",
@@ -53,7 +62,6 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dexmn"]
-radius = 10.0
 height = 20.0
 
 [node name="Fireball" type="Area2D" groups=["attack"]]
@@ -65,7 +73,7 @@ script = ExtResource("1_0gb5m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_pgi1l")
-animation = &"fire"
+animation = &"explosion"
 autoplay = "fire"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -73,6 +81,19 @@ position = Vector2(7.10543e-15, -3.55271e-15)
 shape = SubResource("CapsuleShape2D_dexmn")
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+autostart = true
 
-[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[node name="snd_throw" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_u62co")
+volume_db = -20.0
+pitch_scale = 2.0
+autoplay = true
+
+[node name="snd_explode" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_u55ov")
+volume_db = -15.0
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="finished" from="snd_explode" to="." method="_on_snd_explode_finished"]

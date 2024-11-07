@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://vsf7gpyif35f"]
 
-[ext_resource type="Texture2D" uid="uid://bppybys3f3rv7" path="res://Assets/MOSH_Tornado.png" id="1_84xgp"]
+[ext_resource type="Texture2D" uid="uid://bppybys3f3rv7" path="res://Assets/Weapons/MOSH_Tornado.png" id="1_84xgp"]
 [ext_resource type="Script" path="res://Player/Attack/tornado.gd" id="1_etdwg"]
 [ext_resource type="AudioStream" uid="uid://5ujwqxck5g0r" path="res://Audio/tornado_attack.mp3" id="3_vwypx"]
 

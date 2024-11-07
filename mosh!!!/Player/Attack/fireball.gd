@@ -12,6 +12,9 @@ var angle = Vector2.ZERO
 
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var collision: CollisionShape2D = $CollisionShape2D
+@onready var snd_throw: AudioStreamPlayer = $snd_throw
+@onready var snd_explode: AudioStreamPlayer = $snd_explode
 
 signal remove_from_array(object)
 
@@ -19,10 +22,16 @@ func _ready() -> void:
 	angle = global_position.direction_to(target)
 	rotation = angle.angle() + deg_to_rad(90)
 	match level:
-		1:
-			hp = 2
+		1, 2:
+			hp = 1
 			speed = 100
-			damage = 2.5
+			damage = 4
+			knock_amount = 100
+			attack_size = 1.0
+		3, 4:
+			hp = 1
+			speed = 100
+			damage = 8
 			knock_amount = 100
 			attack_size = 1.0
 	var tween = create_tween()
@@ -34,13 +43,15 @@ func _physics_process(delta: float) -> void:
 	
 func enemy_hit(charge = 1):
 	sprite.play("explosion")
+	snd_explode.play()
 	hp -= charge
 	if hp <= 0:
 		emit_signal("remove_from_array", self)
+		collision.call_deferred("set", "disabled", true)
 
 func _on_timer_timeout() -> void:
 	emit_signal("remove_from_array", self)
 	queue_free()
 
-func _on_animated_sprite_2d_animation_finished() -> void:
+func _on_snd_explode_finished() -> void:
 	queue_free()

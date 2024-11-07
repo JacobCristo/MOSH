@@ -7,6 +7,7 @@ var last_movement = Vector2.UP
 var experience = 0
 var level = 1
 var collected_experience = 0
+var max_hp = 80
 
 #Attack
 var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
@@ -23,27 +24,36 @@ var fireball = preload("res://Player/Attack/fireball.tscn")
 @onready var fireballTimer = get_node("%FireballTimer")
 @onready var fireballAttackTimer = get_node("%FireballAttackTimer")
 
+#Upgrades
+var collected_upgrades = []
+var upgrade_options = []
+var armor = 0
+var speed = 0
+var spell_cooldown = 0
+var spell_size = 0
+var additional_attacks = 0
+
 #Ice Spear
 var icespear_ammo = 0
-var icespear_baseammo = 1
+var icespear_baseammo = 0
 var icespear_attackspeed = 1.5
-var icespear_level = 1
+var icespear_level = 0
 
 #Tornado
 var tornado_ammo = 0
-var tornado_baseammo = 1
+var tornado_baseammo = 0
 var tornado_attackspeed = 1
-var tornado_level = 1
+var tornado_level = 0
 
 #Javelin
-var javelin_ammo = 2
-var javelin_level = 1
+var javelin_ammo = 0
+var javelin_level = 0
 
 #Fireball
 var fireball_ammo = 0
-var fireball_baseammo = 2
-var fireball_attackspeed = 1.0
-var fireball_level = 1
+var fireball_baseammo = 0
+var fireball_attackspeed = 1
+var fireball_level = 0
 
 #Enemy Related
 var enemy_close = []
@@ -59,6 +69,7 @@ var enemy_close = []
 @onready var itemOptions = preload("res://Utility/item_option.tscn")
 
 func _ready() -> void:
+	upgrade_character("fireball1") #start off with a  javelin
 	attack()
 	set_expbar(experience, calculate_experience_cap())
 
@@ -86,26 +97,26 @@ func movement():
 
 func attack():
 	if icespear_level > 0:
-		iceSpearTimer.wait_time = icespear_attackspeed
+		iceSpearTimer.wait_time = icespear_attackspeed * (1 - spell_cooldown)
 		if iceSpearTimer.is_stopped():
 			iceSpearTimer.start()	
 	if tornado_level > 0:
-		tornadoTimer.wait_time = tornado_attackspeed
+		tornadoTimer.wait_time = tornado_attackspeed * (1 - spell_cooldown)
 		if tornadoTimer.is_stopped():
 			tornadoTimer.start()	
 	if javelin_level > 0:
 		spawn_javelin()
 	if fireball_level > 0:
-		fireballTimer.wait_time = fireball_attackspeed
+		fireballTimer.wait_time = fireball_attackspeed * (1 - spell_cooldown)
 		if fireballTimer.is_stopped():
 			fireballTimer.start()
 			
 func _on_hurtbox_hurt(damage: Variant, _angle:Variant, _knockback:Variant) -> void:
-	hp -= damage
+	hp -= clamp(damage - armor, 1, 999) #guarantee at least one damage
 	print(hp)
 
 func _on_ice_spear_timer_timeout() -> void:
-	icespear_ammo += icespear_baseammo
+	icespear_ammo += icespear_baseammo + additional_attacks
 	iceSpearAttackTimer.start()
 
 func _on_ice_spear_attack_timer_timeout() -> void:
@@ -122,7 +133,7 @@ func _on_ice_spear_attack_timer_timeout() -> void:
 			iceSpearAttackTimer.stop()
 			
 func _on_tornado_timer_timeout() -> void:
-	tornado_ammo += tornado_baseammo
+	tornado_ammo += tornado_baseammo + additional_attacks
 	tornadoAttackTimer.start()
 
 func _on_tornado_attack_timer_timeout() -> void:
@@ -139,7 +150,7 @@ func _on_tornado_attack_timer_timeout() -> void:
 			tornadoAttackTimer.stop()
 			
 func _on_fireball_timer_timeout() -> void:
-	fireball_ammo += fireball_baseammo
+	fireball_ammo += fireball_baseammo + additional_attacks
 	fireballAttackTimer.start()
 
 
@@ -158,12 +169,17 @@ func _on_fireball_attack_timer_timeout() -> void:
 			
 func spawn_javelin():
 	var get_javelin_total = javelin_base.get_child_count()
-	var calc_spawns = javelin_ammo - get_javelin_total
+	var calc_spawns = (javelin_ammo + additional_attacks) - get_javelin_total
 	while calc_spawns > 0:
 		var javelin_spawn = javelin.instantiate()
 		javelin_spawn.global_position = global_position
 		javelin_base.add_child(javelin_spawn)
 		calc_spawns -= 1
+	#update javelin
+	var get_javelins = javelin_base.get_children()
+	for i in get_javelins:
+		if i.has_method("update_javelin"):
+			i.update_javelin()
 
 func get_random_target():
 	if enemy_close.size() > 0:
@@ -212,18 +228,105 @@ func levelup():
 	var options_max = 3
 	while (options < options_max):
 		var option_choice = itemOptions.instantiate()
+		option_choice.item = get_random_item()
 		upgradeOptions.add_child(option_choice)
 		options += 1
 	get_tree().paused = true
 	
 func upgrade_character(upgrade):
+	match upgrade:
+		"icespear1":
+			icespear_level = 1
+			icespear_baseammo += 1
+		"icespear2":
+			icespear_level = 2
+			icespear_baseammo += 1
+		"icespear3":
+			icespear_level = 3
+		"icespear4":
+			icespear_level = 4
+			icespear_baseammo += 2
+		"tornado1":
+			tornado_level = 1
+			tornado_baseammo += 1
+		"tornado2":
+			tornado_level = 2
+			tornado_baseammo += 1
+		"tornado3":
+			tornado_level = 3
+			tornado_attackspeed -= 0.5
+		"tornado4":
+			tornado_level = 4
+			tornado_baseammo += 1
+		"javelin1":
+			javelin_level = 1
+			javelin_ammo = 1
+		"javelin2":
+			javelin_level = 2
+		"javelin3":
+			javelin_level = 3
+		"javelin4":
+			javelin_level = 4
+		"fireball1":
+			fireball_level = 1
+			fireball_baseammo = 1
+		"fireball2":
+			fireball_level = 2
+			fireball_baseammo += 1
+		"fireball3":
+			fireball_level = 3
+		"fireball4":
+			fireball_level = 4
+			fireball_baseammo += 2
+		"armor1","armor2","armor3","armor4":
+			armor += 1
+		"speed1","speed2","speed3","speed4":
+			movement_speed += 20.0
+		"tome1","tome2","tome3","tome4":
+			spell_size += 0.10
+		"scroll1","scroll2","scroll3","scroll4":
+			spell_cooldown += 0.05
+		"ring1","ring2":
+			additional_attacks += 1
+		"food":
+			hp += 20
+			hp = clamp(hp,0,max_hp)
+	
+	attack()
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
 		i.queue_free()
+	upgrade_options.clear()
+	collected_upgrades.append(upgrade)
 	level_panel.visible = false
 	level_panel.position = Vector2(800, 50)
 	get_tree().paused = false
 	calculate_experience(0)
+	
+func get_random_item():
+	var dblist = []
+	for i in UpgradeDb.UPGRADES:
+		if i in collected_upgrades: #find already collected upgrades
+			pass
+		elif i in upgrade_options: #if the upgrade is already an option
+			pass
+		elif UpgradeDb.UPGRADES[i]["type"] == "item": #don't pick food
+			pass
+		elif UpgradeDb.UPGRADES[i]["prerequisite"].size() > 0: #check for prereqs
+			var to_add = true
+			for n in UpgradeDb.UPGRADES[i]["prerequisite"]:
+				if not n in collected_upgrades:
+					to_add = false
+			if to_add:
+				dblist.append(i)
+		else:
+			dblist.append(i)
+	if dblist.size() > 0:
+		var random_item = dblist.pick_random()
+		upgrade_options.append(random_item)
+		return random_item
+	else:
+		return null
 	
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 	if not enemy_close.has(body):

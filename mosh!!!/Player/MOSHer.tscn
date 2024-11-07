@@ -151,7 +151,7 @@ unique_name_in_owner = true
 
 [node name="FireballAttackTimer" type="Timer" parent="Attack/FireballTimer"]
 unique_name_in_owner = true
-wait_time = 0.4
+wait_time = 0.1
 
 [node name="GrabArea" type="Area2D" parent="."]
 visible = false

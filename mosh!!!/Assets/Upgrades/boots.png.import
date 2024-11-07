@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bppybys3f3rv7"
-path="res://.godot/imported/MOSH_Tornado.png-60a2683d3963b243daef9e9aa5fb7fd0.ctex"
+uid="uid://dl60bbm57xxja"
+path="res://.godot/imported/boots.png-4b94e739fe1729017a400230608922ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/MOSH_Tornado.png"
-dest_files=["res://.godot/imported/MOSH_Tornado.png-60a2683d3963b243daef9e9aa5fb7fd0.ctex"]
+source_file="res://Assets/Upgrades/boots.png"
+dest_files=["res://.godot/imported/boots.png-4b94e739fe1729017a400230608922ec.ctex"]
 
 [params]
 

@@ -15,8 +15,8 @@ var target_array = []
 var angle = Vector2.ZERO
 var reset_pos = Vector2.ZERO
 
-var sprite_javelin_regular = preload("res://Assets/MOSH_Javelin.png")
-var sprite_javelin_attack = preload("res://Assets/MOSH_Javelin_Attack.png")
+var sprite_javelin_regular = preload("res://Assets/Weapons/MOSH_Javelin.png")
+var sprite_javelin_attack = preload("res://Assets/Weapons/MOSH_Javelin_Attack.png")
 
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var sprite = $Sprite2D
@@ -41,8 +41,32 @@ func update_javelin():
 			damage = 10
 			knock_amount = 100
 			paths = 1
-			attack_size = 1.0
-			attack_speed = 4.0
+			attack_size = 1.0 * (1 - player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
+		2:
+			hp = 999
+			speed = 200
+			damage = 10
+			knock_amount = 100
+			paths = 2
+			attack_size = 1.0 * (1 - player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
+		3:
+			hp = 999
+			speed = 200
+			damage = 10
+			knock_amount = 100
+			paths = 3
+			attack_size = 1.0 * (1 - player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
+		4:
+			hp = 999
+			speed = 200
+			damage = 15
+			knock_amount = 120
+			paths = 3
+			attack_size = 1.0 * (1 - player.spell_size)
+			attack_speed = 5.0 * (1 - player.spell_cooldown)
 			
 	scale = Vector2(1.0, 1.0) * attack_size
 	attackTimer.wait_time = attack_speed
