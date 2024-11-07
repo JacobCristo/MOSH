@@ -3,6 +3,7 @@ extends CharacterBody2D
 var movement_speed = 80.0
 var hp = 80
 var last_movement = Vector2.UP
+var time = 0
 
 var experience = 0
 var level = 1
@@ -67,9 +68,15 @@ var enemy_close = []
 @onready var upgradeOptions = get_node("%UpgradeOptions")
 @onready var snd_levelup = get_node("%snd_levelup")
 @onready var itemOptions = preload("res://Utility/item_option.tscn")
+@onready var healthBar = get_node("%HealthBar")
+@onready var label_timer = get_node("%label_timer")
+@onready var collectedWeapons = get_node("%CollectedWeapons")
+@onready var collectedUpgrades = get_node("%CollectedUpgrades")
+@onready var item_container = preload("res://Player/GUI/item_container.tscn")
 
 func _ready() -> void:
 	upgrade_character("fireball1") #start off with a  javelin
+	_on_hurtbox_hurt(0, 0, 0)
 	attack()
 	set_expbar(experience, calculate_experience_cap())
 
@@ -113,7 +120,8 @@ func attack():
 			
 func _on_hurtbox_hurt(damage: Variant, _angle:Variant, _knockback:Variant) -> void:
 	hp -= clamp(damage - armor, 1, 999) #guarantee at least one damage
-	print(hp)
+	healthBar.max_value = max_hp
+	healthBar.value = hp
 
 func _on_ice_spear_timer_timeout() -> void:
 	icespear_ammo += icespear_baseammo + additional_attacks
@@ -292,6 +300,7 @@ func upgrade_character(upgrade):
 			hp += 20
 			hp = clamp(hp,0,max_hp)
 	
+	adjust_gui_collection(upgrade)
 	attack()
 	var option_children = upgradeOptions.get_children()
 	for i in option_children:
@@ -327,6 +336,32 @@ func get_random_item():
 		return random_item
 	else:
 		return null
+		
+func change_time(argtime = 0):
+	time = argtime
+	var get_m = int(time/60.0)
+	var get_s = time % 60
+	if get_m < 10:
+		get_m = str(0, get_m)
+	if get_s < 10:
+		get_s = str(0, get_s)
+	label_timer.text = str(get_m, ":", get_s)
+	
+func adjust_gui_collection(upgrade):
+	var get_upgraded_display_name = UpgradeDb.UPGRADES[upgrade]["display_name"]
+	var get_type = UpgradeDb.UPGRADES[upgrade]["type"]
+	if get_type != "item":
+		var get_collected_display_names = []
+		for i in collected_upgrades:
+			get_collected_display_names.append(UpgradeDb.UPGRADES[i]["display_name"])
+		if not get_upgraded_display_name in get_collected_display_names:
+			var new_item = item_container.instantiate()
+			new_item.upgrade = upgrade
+			match get_type:
+				"weapon":
+					collectedWeapons.add_child(new_item)
+				"upgrade":
+					collectedUpgrades.add_child(new_item)
 	
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 	if not enemy_close.has(body):

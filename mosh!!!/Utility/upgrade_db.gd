@@ -37,7 +37,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"fireball1": {
-		"icon": WEAPON_PATH + "MOSH_fireball.png",
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
 		"display_name": "Fireball",
 		"details": "Balls of fire are rapidly thrown at a random enemy",
 		"level": "Level: 1",
@@ -45,7 +45,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"fireball2": {
-		"icon": WEAPON_PATH + "MOSH_fireball.png",
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
 		"display_name": "Fireball",
 		"details": "An addition Fireball is thrown",
 		"level": "Level: 2",
@@ -53,7 +53,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"fireball3": {
-		"icon": WEAPON_PATH + "MOSH_fireball.png",
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
 		"display_name": "Fireball",
 		"details": "Fireballs now do 8 damage",
 		"level": "Level: 3",
@@ -61,7 +61,7 @@ const UPGRADES = {
 		"type": "weapon"
 	},
 	"fireball4": {
-		"icon": WEAPON_PATH + "MOSH_fireball.png",
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
 		"display_name": "Ice Spear",
 		"details": "An additional 2 Fireballs are thrown",
 		"level": "Level: 4",

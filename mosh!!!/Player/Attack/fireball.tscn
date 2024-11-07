@@ -81,19 +81,19 @@ position = Vector2(7.10543e-15, -3.55271e-15)
 shape = SubResource("CapsuleShape2D_dexmn")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 15.0
+wait_time = 10.0
 one_shot = true
 autostart = true
 
 [node name="snd_throw" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_u62co")
-volume_db = -20.0
+volume_db = -30.0
 pitch_scale = 2.0
 autoplay = true
 
 [node name="snd_explode" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_u55ov")
-volume_db = -15.0
+volume_db = -30.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="finished" from="snd_explode" to="." method="_on_snd_explode_finished"]

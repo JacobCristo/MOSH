@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://x7pogqps41i4"]
+[gd_scene load_steps=24 format=3 uid="uid://x7pogqps41i4"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="2_h2odc"]
 [ext_resource type="Texture2D" uid="uid://cjtkcrg2jh07r" path="res://Assets/WizardMosher_Idle.png" id="2_rhao5"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://xy1bu0mb6bng" path="res://Utility/hurtbox.tscn" id="4_nhxuu"]
 [ext_resource type="Texture2D" uid="uid://civqkrthstwia" path="res://Assets/MOSH_Expbar_BG.png" id="5_opmf8"]
 [ext_resource type="Texture2D" uid="uid://cq8k2r7fgvhl1" path="res://Assets/MOSH_Expbar_BAR.png" id="6_is6j2"]
+[ext_resource type="Texture2D" uid="uid://bry4hul8gxiq" path="res://Assets/MOSH_Healthbar_BG.png" id="7_2jfiv"]
 [ext_resource type="AudioStream" uid="uid://7g3556u8nj1r" path="res://Audio/level_up.mp3" id="7_x020g"]
+[ext_resource type="Texture2D" uid="uid://bf4ac2tgoxcu6" path="res://Assets/MOSH_Healthbar_BAR.png" id="8_icskk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6xlta"]
 atlas = ExtResource("2_rhao5")
@@ -195,6 +197,48 @@ offset_bottom = 27.0
 text = "Level: 1"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+self_modulate = Color(0.76662, 0.76662, 0.76662, 1)
+layout_mode = 0
+offset_left = 310.0
+offset_top = 204.0
+offset_right = 358.0
+offset_bottom = 220.0
+scale = Vector2(0.5, 0.5)
+value = 100.0
+texture_under = ExtResource("7_2jfiv")
+texture_progress = ExtResource("8_icskk")
+
+[node name="label_timer" type="Label" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 280.0
+offset_top = 30.0
+offset_right = 360.0
+offset_bottom = 54.0
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CollectedWeapons" type="GridContainer" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 208.0
+offset_bottom = 48.0
+columns = 10
+
+[node name="CollectedUpgrades" type="GridContainer" parent="GUILayer/GUI"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 8.0
+offset_top = 50.0
+offset_right = 208.0
+offset_bottom = 66.0
+columns = 10
 
 [node name="LevelUp" type="Panel" parent="GUILayer"]
 unique_name_in_owner = true
