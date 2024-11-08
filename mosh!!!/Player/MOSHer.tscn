@@ -159,6 +159,14 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 wait_time = 0.1
 
+[node name="FlamethrowerTimer" type="Timer" parent="Attack"]
+unique_name_in_owner = true
+wait_time = 0.1
+
+[node name="FlamethrowerAttackTimer" type="Timer" parent="Attack/FlamethrowerTimer"]
+unique_name_in_owner = true
+wait_time = 0.075
+
 [node name="GrabArea" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
@@ -321,6 +329,8 @@ text = "Menu"
 [connection signal="timeout" from="Attack/TornadoTimer/TornadoAttackTimer" to="." method="_on_tornado_attack_timer_timeout"]
 [connection signal="timeout" from="Attack/FireballTimer" to="." method="_on_fireball_timer_timeout"]
 [connection signal="timeout" from="Attack/FireballTimer/FireballAttackTimer" to="." method="_on_fireball_attack_timer_timeout"]
+[connection signal="timeout" from="Attack/FlamethrowerTimer" to="." method="_on_flamethrower_timer_timeout"]
+[connection signal="timeout" from="Attack/FlamethrowerTimer/FlamethrowerAttackTimer" to="." method="_on_flamethrower_attack_timer_timeout"]
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
 [connection signal="click_end" from="GUILayer/DeathPanel/button_menu" to="." method="_on_button_menu_click_end"]

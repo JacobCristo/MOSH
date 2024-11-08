@@ -68,6 +68,38 @@ const UPGRADES = {
 		"prerequisite": ["fireball3"],
 		"type": "weapon"
 	},
+	"flamethrower1": {
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
+		"display_name": "Flamethrower",
+		"details": "Balls of fire are rapidly thrown at a random enemy",
+		"level": "Level: 1",
+		"prerequisite": [],
+		"type": "weapon"
+	},
+	"flamethrower2": {
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
+		"display_name": "Flamethrower",
+		"details": "Fire pierces through an additional enemy and does more damage",
+		"level": "Level: 2",
+		"prerequisite": ["flamethrower1"],
+		"type": "weapon"
+	},
+	"flamethrower3": {
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
+		"display_name": "Flamethrower",
+		"details": "Fire pierces through an additional two enemies",
+		"level": "Level: 3",
+		"prerequisite": ["flamethrower2"],
+		"type": "weapon"
+	},
+	"flamethrower4": {
+		"icon": WEAPON_PATH + "MOSH_Fireball.png",
+		"display_name": "Flamethrower",
+		"details": "Fire does even more damage and projectile size is increased",
+		"level": "Level: 4",
+		"prerequisite": ["flamethrower3"],
+		"type": "weapon"
+	},
 	"javelin1": {
 		"icon": WEAPON_PATH + "MOSH_Javelin.png",
 		"display_name": "Javelin",

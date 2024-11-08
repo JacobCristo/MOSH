@@ -15,6 +15,7 @@ var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
 var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
 var fireball = preload("res://Player/Attack/fireball.tscn")
+var flamethrower = preload("res://Player/Attack/flamethrower.tscn")
 
 #Attack Nodes
 @onready var iceSpearTimer = get_node("%IceSpearTimer")
@@ -24,7 +25,8 @@ var fireball = preload("res://Player/Attack/fireball.tscn")
 @onready var javelin_base = get_node("%JavelinBase")
 @onready var fireballTimer = get_node("%FireballTimer")
 @onready var fireballAttackTimer = get_node("%FireballAttackTimer")
-
+@onready var flamethrowerTimer = get_node("%FlamethrowerTimer")
+@onready var flamethrowerAttackTimer = get_node("%FlamethrowerAttackTimer")
 #Upgrades
 var collected_upgrades = []
 var upgrade_options = []
@@ -56,6 +58,12 @@ var fireball_baseammo = 0
 var fireball_attackspeed = 0.75
 var fireball_level = 0
 
+#Flamethrower
+var flamethrower_ammo = 0
+var flamethrower_baseammo = 0
+var flamethrower_attackspeed = 0.25
+var flamethrower_level = 0
+
 #Enemy Related
 var enemy_close = []
 
@@ -82,7 +90,7 @@ var enemy_close = []
 signal player_death()
 
 func _ready() -> void:
-	upgrade_character("icespear1") #start off with a weapon
+	upgrade_character("flamethrower1") #start off with a weapon
 	_on_hurtbox_hurt(0, 0, 0)
 	attack()
 	set_expbar(experience, calculate_experience_cap())
@@ -123,6 +131,10 @@ func attack():
 		fireballTimer.wait_time = fireball_attackspeed * (1 - spell_cooldown)
 		if fireballTimer.is_stopped():
 			fireballTimer.start()
+	if flamethrower_level > 0:
+		flamethrowerTimer.wait_time = flamethrower_attackspeed * (1 - spell_cooldown)
+		if flamethrowerTimer.is_stopped():
+			flamethrowerTimer.start()
 			
 func _on_hurtbox_hurt(damage: Variant, _angle:Variant, _knockback:Variant) -> void:
 	hp -= clamp(damage - armor, 1, 999) #guarantee at least one damage
@@ -182,6 +194,24 @@ func _on_fireball_attack_timer_timeout() -> void:
 			fireballAttackTimer.start()
 		else:
 			fireballAttackTimer.stop()
+
+func _on_flamethrower_timer_timeout() -> void:
+	flamethrower_ammo += flamethrower_baseammo + additional_attacks
+	flamethrowerAttackTimer.start()
+
+func _on_flamethrower_attack_timer_timeout() -> void:
+	if flamethrower_ammo > 0:
+		var target = get_random_target()
+		var flamethrower_attack = flamethrower.instantiate()
+		flamethrower_attack.position = position
+		flamethrower_attack.target = target
+		flamethrower_attack.level = flamethrower_level
+		add_child(flamethrower_attack)
+		flamethrower_ammo -= 1
+		if flamethrower_ammo > 0:
+			flamethrowerAttackTimer.start()
+		else:
+			flamethrowerAttackTimer.stop()
 			
 func spawn_javelin():
 	var get_javelin_total = javelin_base.get_child_count()
@@ -294,6 +324,15 @@ func upgrade_character(upgrade):
 		"fireball4":
 			fireball_level = 4
 			fireball_baseammo += 2
+		"flamethrower1":
+			flamethrower_level = 1
+			flamethrower_baseammo = 15
+		"flamethrower2":
+			flamethrower_level = 2
+		"flamethrower3":
+			flamethrower_level = 3
+		"flamethrower4":
+			flamethrower_level = 4
 		"armor1","armor2","armor3","armor4":
 			armor += 1
 		"speed1","speed2","speed3","speed4":

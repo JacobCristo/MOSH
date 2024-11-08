@@ -1,0 +1,119 @@
+[gd_scene load_steps=15 format=3 uid="uid://bwskfq5xrdbuw"]
+
+[ext_resource type="Script" path="res://Player/Attack/flamethrower.gd" id="1_3i3b2"]
+[ext_resource type="Texture2D" uid="uid://bavi6du0c6jaf" path="res://Assets/Weapons/MOSH_Fireball-Explosion-Sheet.png" id="2_sevjr"]
+[ext_resource type="Texture2D" uid="uid://ifwy58bb7brq" path="res://Assets/Weapons/MOSH_Fireball.png" id="3_xne6n"]
+[ext_resource type="AudioStream" uid="uid://bed52gxfpctjj" path="res://Audio/fireball_throw.mp3" id="4_4y4nh"]
+[ext_resource type="AudioStream" uid="uid://7q1dyjmba1fs" path="res://Audio/fireball_explosion.mp3" id="5_me4dl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3frx"]
+atlas = ExtResource("2_sevjr")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s68je"]
+atlas = ExtResource("2_sevjr")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7rbf"]
+atlas = ExtResource("2_sevjr")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_314br"]
+atlas = ExtResource("2_sevjr")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tpdu"]
+atlas = ExtResource("2_sevjr")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7gk7"]
+atlas = ExtResource("3_xne6n")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pgi1l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3frx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s68je")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x7rbf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_314br")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tpdu")
+}],
+"loop": false,
+"name": &"explosion",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7gk7")
+}],
+"loop": true,
+"name": &"fire",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dexmn"]
+height = 20.0
+
+[sub_resource type="Curve" id="Curve_53cgv"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Flamethrower" type="Area2D" groups=["attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_3i3b2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pgi1l")
+animation = &"explosion"
+autoplay = "fire"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(7.10543e-15, -3.55271e-15)
+shape = SubResource("CapsuleShape2D_dexmn")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+autostart = true
+
+[node name="snd_throw" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_4y4nh")
+volume_db = -30.0
+pitch_scale = 2.0
+autoplay = true
+
+[node name="snd_explode" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_me4dl")
+volume_db = -30.0
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 64
+lifetime = 0.1
+speed_scale = 0.35
+randomness = 0.86
+emission_shape = 1
+emission_sphere_radius = 10.23
+spread = 21.0
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+color = Color(1, 0.568627, 0.207843, 1)
+hue_variation_min = -0.1
+hue_variation_max = 0.2
+hue_variation_curve = SubResource("Curve_53cgv")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="finished" from="snd_explode" to="." method="_on_snd_explode_finished"]

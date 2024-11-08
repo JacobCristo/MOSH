@@ -113,6 +113,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 640000, 360000)
 
 [node name="Player" parent="." instance=ExtResource("2_s8sc5")]
+z_index = 1
 
 [node name="EnemySpawner" parent="." instance=ExtResource("4_3mmpt")]
 spawns = Array[ExtResource("5_qgr7d")]([SubResource("Resource_hrmut"), SubResource("Resource_17d4t"), SubResource("Resource_mgr0l"), SubResource("Resource_mr2p1"), SubResource("Resource_50k1c"), SubResource("Resource_xl7cc"), SubResource("Resource_4u5xj"), SubResource("Resource_k21eg"), SubResource("Resource_ckcd0"), SubResource("Resource_vsayq"), SubResource("Resource_bb4u3")])
