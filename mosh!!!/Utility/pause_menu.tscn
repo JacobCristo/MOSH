@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://dyd4xcd5is8s8"]
+
+[ext_resource type="Script" path="res://Utility/pause_menu.gd" id="1_iwq0d"]
+
+[node name="PauseMenu" type="Control"]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iwq0d")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -1.0
+offset_top = 60.0
+offset_right = 639.0
+offset_bottom = 160.0
+theme_override_font_sizes/font_size = 72
+text = "PAUSED"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UnpauseTimer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[connection signal="timeout" from="UnpauseTimer" to="." method="_on_unpause_timer_timeout"]
