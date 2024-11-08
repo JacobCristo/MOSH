@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://clki5b6lymmhy"]
+[gd_scene load_steps=24 format=3 uid="uid://clki5b6lymmhy"]
 
 [ext_resource type="Texture2D" uid="uid://ctu55fde3nfvb" path="res://Assets/MOSH_SandTexture.png" id="1_rw4g0"]
 [ext_resource type="PackedScene" uid="uid://x7pogqps41i4" path="res://Player/MOSHer.tscn" id="2_s8sc5"]
@@ -93,6 +93,14 @@ enemy = ExtResource("10_03kol")
 enemy_number = 1
 enemy_spawn_delay = 1
 
+[sub_resource type="Resource" id="Resource_bb4u3"]
+script = ExtResource("5_qgr7d")
+time_start = 210
+time_end = 270
+enemy = ExtResource("6_oieu1")
+enemy_number = 10
+enemy_spawn_delay = 0
+
 [node name="World" type="Node2D"]
 
 [node name="BG" type="Sprite2D" parent="."]
@@ -106,7 +114,7 @@ region_rect = Rect2(0, 0, 640000, 360000)
 [node name="Player" parent="." instance=ExtResource("2_s8sc5")]
 
 [node name="EnemySpawner" parent="." instance=ExtResource("4_3mmpt")]
-spawns = Array[ExtResource("5_qgr7d")]([SubResource("Resource_hrmut"), SubResource("Resource_17d4t"), SubResource("Resource_mgr0l"), SubResource("Resource_mr2p1"), SubResource("Resource_50k1c"), SubResource("Resource_xl7cc"), SubResource("Resource_4u5xj"), SubResource("Resource_k21eg"), SubResource("Resource_ckcd0"), SubResource("Resource_vsayq")])
+spawns = Array[ExtResource("5_qgr7d")]([SubResource("Resource_hrmut"), SubResource("Resource_17d4t"), SubResource("Resource_mgr0l"), SubResource("Resource_mr2p1"), SubResource("Resource_50k1c"), SubResource("Resource_xl7cc"), SubResource("Resource_4u5xj"), SubResource("Resource_k21eg"), SubResource("Resource_ckcd0"), SubResource("Resource_vsayq"), SubResource("Resource_bb4u3")])
 
 [node name="Loot" type="Node2D" parent="." groups=["loot"]]
 

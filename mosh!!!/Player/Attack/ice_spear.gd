@@ -12,7 +12,8 @@ var angle = Vector2.ZERO
 
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var collision: CollisionShape2D = $CollisionShape2D
-@onready var sprite: Sprite2D = $Sprite2D
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var snd_break: AudioStreamPlayer = $snd_break
 
 signal remove_from_array(object)
 
@@ -44,11 +45,12 @@ func enemy_hit(charge = 1):
 	if hp <= 0:
 		emit_signal("remove_from_array", self)
 		collision.call_deferred("set", "disabled", true)
-		sprite.visible = false
+		sprite.play("break")
+		snd_break.play()
 
 func _on_timer_timeout() -> void:
 	emit_signal("remove_from_array", self)
 	queue_free()
 	
-func _on_snd_play_finished() -> void:
+func _on_snd_break_finished() -> void:
 	queue_free()

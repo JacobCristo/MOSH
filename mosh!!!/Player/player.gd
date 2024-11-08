@@ -82,11 +82,10 @@ var enemy_close = []
 signal player_death()
 
 func _ready() -> void:
-	upgrade_character("tornado1") #start off with a weapon
+	upgrade_character("icespear1") #start off with a weapon
 	_on_hurtbox_hurt(0, 0, 0)
 	attack()
 	set_expbar(experience, calculate_experience_cap())
-
 
 func _physics_process(_delta: float) -> void:
 	movement()
@@ -298,7 +297,7 @@ func upgrade_character(upgrade):
 		"armor1","armor2","armor3","armor4":
 			armor += 1
 		"speed1","speed2","speed3","speed4":
-			movement_speed += 20.0
+			movement_speed += 40.0
 		"tome1","tome2","tome3","tome4":
 			spell_size += 0.10
 		"scroll1","scroll2","scroll3","scroll4":
