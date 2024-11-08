@@ -30,8 +30,8 @@ autostart = true
 
 [node name="snd_play" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_r42wh")
-volume_db = -15.0
-pitch_scale = 5.0
+volume_db = -20.0
 autoplay = true
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="finished" from="snd_play" to="." method="_on_snd_play_finished"]

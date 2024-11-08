@@ -43,7 +43,7 @@ var icespear_level = 0
 #Tornado
 var tornado_ammo = 0
 var tornado_baseammo = 0
-var tornado_attackspeed = 1
+var tornado_attackspeed = 5
 var tornado_level = 0
 
 #Javelin
@@ -53,7 +53,7 @@ var javelin_level = 0
 #Fireball
 var fireball_ammo = 0
 var fireball_baseammo = 0
-var fireball_attackspeed = 1
+var fireball_attackspeed = 0.75
 var fireball_level = 0
 
 #Enemy Related
@@ -74,8 +74,15 @@ var enemy_close = []
 @onready var collectedUpgrades = get_node("%CollectedUpgrades")
 @onready var item_container = preload("res://Player/GUI/item_container.tscn")
 
+@onready var death_panel = get_node("%DeathPanel")
+@onready var label_result = get_node("%label_results")
+@onready var snd_victory = get_node("%snd_victory")
+@onready var snd_lose = get_node("%snd_lose")
+
+signal player_death()
+
 func _ready() -> void:
-	upgrade_character("fireball1") #start off with a  javelin
+	upgrade_character("tornado1") #start off with a weapon
 	_on_hurtbox_hurt(0, 0, 0)
 	attack()
 	set_expbar(experience, calculate_experience_cap())
@@ -122,6 +129,8 @@ func _on_hurtbox_hurt(damage: Variant, _angle:Variant, _knockback:Variant) -> vo
 	hp -= clamp(damage - armor, 1, 999) #guarantee at least one damage
 	healthBar.max_value = max_hp
 	healthBar.value = hp
+	if hp <= 0:
+		death()
 
 func _on_ice_spear_timer_timeout() -> void:
 	icespear_ammo += icespear_baseammo + additional_attacks
@@ -362,6 +371,19 @@ func adjust_gui_collection(upgrade):
 					collectedWeapons.add_child(new_item)
 				"upgrade":
 					collectedUpgrades.add_child(new_item)
+					
+func death():
+	death_panel.visible = true
+	emit_signal("player_death")
+	get_tree().paused = true
+	var tween = death_panel.create_tween()
+	tween.tween_property(death_panel, "position", Vector2(220, 50), 3.0).set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	if time >= 300:
+		label_result.text = "You win!"
+		snd_victory.play()
+	else:
+		label_result.text = "You lose!"
+		snd_lose.play()
 	
 func _on_enemy_detection_area_body_entered(body: Node2D) -> void:
 	if not enemy_close.has(body):
@@ -379,3 +401,7 @@ func _on_collect_area_area_entered(area: Area2D) -> void:
 	if area.is_in_group("loot"):
 		var gem_experience = area.collect()
 		calculate_experience(gem_experience)
+
+func _on_button_menu_click_end() -> void:
+	get_tree().paused = false
+	var _level = get_tree().change_scene_to_file("res://Title Screen/menu.tscn")

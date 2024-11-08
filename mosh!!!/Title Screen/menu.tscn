@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckb3x40u21ye0"]
+
+[ext_resource type="Script" path="res://Title Screen/menu.gd" id="1_uuryt"]
+[ext_resource type="PackedScene" uid="uid://bf3tkurgn7f67" path="res://Utility/basic_button.tscn" id="2_e3l42"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uuryt")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 790.0
+offset_bottom = 384.0
+color = Color(0.772589, 0, 0.0688541, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 640.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 72
+text = "MOSH!!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Play" parent="." instance=ExtResource("2_e3l42")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 250.0
+offset_right = 360.0
+offset_bottom = 281.0
+text = "Play
+"
+
+[node name="Quit" parent="." instance=ExtResource("2_e3l42")]
+layout_mode = 0
+offset_left = 280.0
+offset_top = 290.0
+offset_right = 360.0
+offset_bottom = 321.0
+text = "Quit
+"
+
+[connection signal="click_end" from="Play" to="." method="_on_play_click_end"]
+[connection signal="click_end" from="Quit" to="." method="_on_quit_click_end"]

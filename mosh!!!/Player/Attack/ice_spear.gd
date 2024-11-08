@@ -11,6 +11,8 @@ var target = Vector2.ZERO
 var angle = Vector2.ZERO
 
 @onready var player = get_tree().get_first_node_in_group("player")
+@onready var collision: CollisionShape2D = $CollisionShape2D
+@onready var sprite: Sprite2D = $Sprite2D
 
 signal remove_from_array(object)
 
@@ -41,9 +43,12 @@ func enemy_hit(charge = 1):
 	hp -= charge
 	if hp <= 0:
 		emit_signal("remove_from_array", self)
-		queue_free()
+		collision.call_deferred("set", "disabled", true)
+		sprite.visible = false
 
 func _on_timer_timeout() -> void:
 	emit_signal("remove_from_array", self)
 	queue_free()
 	
+func _on_snd_play_finished() -> void:
+	queue_free()

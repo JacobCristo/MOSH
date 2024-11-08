@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://x7pogqps41i4"]
+[gd_scene load_steps=27 format=3 uid="uid://x7pogqps41i4"]
 
 [ext_resource type="Script" path="res://Player/player.gd" id="2_h2odc"]
 [ext_resource type="Texture2D" uid="uid://cjtkcrg2jh07r" path="res://Assets/WizardMosher_Idle.png" id="2_rhao5"]
@@ -9,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://bry4hul8gxiq" path="res://Assets/MOSH_Healthbar_BG.png" id="7_2jfiv"]
 [ext_resource type="AudioStream" uid="uid://7g3556u8nj1r" path="res://Audio/level_up.mp3" id="7_x020g"]
 [ext_resource type="Texture2D" uid="uid://bf4ac2tgoxcu6" path="res://Assets/MOSH_Healthbar_BAR.png" id="8_icskk"]
+[ext_resource type="AudioStream" uid="uid://gmn25ep4gbkc" path="res://Audio/victory.mp3" id="10_afrlm"]
+[ext_resource type="AudioStream" uid="uid://bh7ue02ii0aj" path="res://Audio/failure.mp3" id="11_oentc"]
+[ext_resource type="PackedScene" uid="uid://bf3tkurgn7f67" path="res://Utility/basic_button.tscn" id="12_0bpjm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6xlta"]
 atlas = ExtResource("2_rhao5")
@@ -139,11 +142,11 @@ wait_time = 0.075
 
 [node name="TornadoTimer" type="Timer" parent="Attack"]
 unique_name_in_owner = true
-wait_time = 3.0
+wait_time = 4.0
 
 [node name="TornadoAttackTimer" type="Timer" parent="Attack/TornadoTimer"]
 unique_name_in_owner = true
-wait_time = 0.2
+wait_time = 0.05
 
 [node name="JavelinBase" type="Node2D" parent="Attack"]
 unique_name_in_owner = true
@@ -270,6 +273,41 @@ unique_name_in_owner = true
 stream = ExtResource("7_x020g")
 volume_db = -20.0
 
+[node name="DeathPanel" type="Panel" parent="GUILayer"]
+unique_name_in_owner = true
+process_mode = 2
+visible = false
+offset_left = 351.0
+offset_top = -139.0
+offset_right = 551.0
+offset_bottom = 111.0
+
+[node name="label_results" type="Label" parent="GUILayer/DeathPanel"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 50.0
+text = "Results"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="snd_victory" type="AudioStreamPlayer" parent="GUILayer/DeathPanel"]
+unique_name_in_owner = true
+stream = ExtResource("10_afrlm")
+volume_db = -20.0
+
+[node name="snd_lose" type="AudioStreamPlayer" parent="GUILayer/DeathPanel"]
+unique_name_in_owner = true
+stream = ExtResource("11_oentc")
+
+[node name="button_menu" parent="GUILayer/DeathPanel" instance=ExtResource("12_0bpjm")]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 200.0
+offset_right = 140.0
+offset_bottom = 231.0
+text = "Menu"
+
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
 [connection signal="body_entered" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_entered"]
 [connection signal="body_exited" from="EnemyDetectionArea" to="." method="_on_enemy_detection_area_body_exited"]
@@ -281,5 +319,6 @@ volume_db = -20.0
 [connection signal="timeout" from="Attack/FireballTimer/FireballAttackTimer" to="." method="_on_fireball_attack_timer_timeout"]
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
+[connection signal="click_end" from="GUILayer/DeathPanel/button_menu" to="." method="_on_button_menu_click_end"]
 
 [editable path="Hurtbox"]

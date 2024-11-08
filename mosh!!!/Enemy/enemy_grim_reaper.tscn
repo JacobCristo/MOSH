@@ -1,0 +1,120 @@
+[gd_scene load_steps=17 format=3 uid="uid://d1koplgvsiuam"]
+
+[ext_resource type="Script" path="res://Enemy/enemy.gd" id="1_yiyfr"]
+[ext_resource type="Texture2D" uid="uid://rsbopbpudt30" path="res://Assets/MOSH_GRIM_REAPER!!!-Walk-Sheet.png" id="2_aw38l"]
+[ext_resource type="PackedScene" uid="uid://xy1bu0mb6bng" path="res://Utility/hurtbox.tscn" id="4_dw3pa"]
+[ext_resource type="PackedScene" uid="uid://c3fc5p4o3pqdi" path="res://Utility/hitbox.tscn" id="5_r8ljs"]
+[ext_resource type="AudioStream" uid="uid://3ca6hlhfuxbj" path="res://Audio/enemy_hit.mp3" id="6_nkyel"]
+[ext_resource type="AudioStream" uid="uid://bveiijbpsb52r" path="res://Audio/enemy_death.mp3" id="7_sxmou"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4v2wb"]
+atlas = ExtResource("2_aw38l")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bn6p7"]
+atlas = ExtResource("2_aw38l")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31fpl"]
+atlas = ExtResource("2_aw38l")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwrdt"]
+atlas = ExtResource("2_aw38l")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_12uu6"]
+atlas = ExtResource("2_aw38l")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rpgxm"]
+atlas = ExtResource("2_aw38l")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xe0gh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4v2wb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bn6p7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31fpl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwrdt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_12uu6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rpgxm")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 20.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j35xk"]
+radius = 13.0
+height = 42.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2g526"]
+size = Vector2(93, 99)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_scb2r"]
+size = Vector2(79, 89)
+
+[node name="enemy_grim_reaper" type="CharacterBody2D"]
+collision_layer = 5
+collision_mask = 5
+motion_mode = 1
+script = ExtResource("1_yiyfr")
+movement_speed = 150.0
+hp = 99999
+knockback_recovery = 99999.0
+experience = 10000
+enemy_damage = 20
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_xe0gh")
+animation = &"walk"
+autoplay = "walk"
+frame_progress = 0.999763
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 22)
+shape = SubResource("CapsuleShape2D_j35xk")
+disabled = true
+
+[node name="Hurtbox" parent="." instance=ExtResource("4_dw3pa")]
+collision_mask = 4
+HurtBoxType = 1
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(-1.5, 2.5)
+shape = SubResource("RectangleShape2D_2g526")
+
+[node name="Hitbox" parent="." instance=ExtResource("5_r8ljs")]
+collision_layer = 2
+
+[node name="CollisionShape2D" parent="Hitbox" index="0"]
+position = Vector2(-2.5, 2.5)
+shape = SubResource("RectangleShape2D_scb2r")
+
+[node name="snd_hit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_nkyel")
+volume_db = -20.0
+
+[node name="snd_death" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_sxmou")
+volume_db = -10.0
+pitch_scale = 3.0
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
+
+[editable path="Hurtbox"]
+[editable path="Hitbox"]
