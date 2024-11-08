@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://clki5b6lymmhy"]
+[gd_scene load_steps=25 format=3 uid="uid://clki5b6lymmhy"]
 
 [ext_resource type="Texture2D" uid="uid://ctu55fde3nfvb" path="res://Assets/MOSH_SandTexture.png" id="1_rw4g0"]
 [ext_resource type="PackedScene" uid="uid://x7pogqps41i4" path="res://Player/MOSHer.tscn" id="2_s8sc5"]
@@ -12,6 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://d1koplgvsiuam" path="res://Enemy/enemy_grim_reaper.tscn" id="10_03kol"]
 [ext_resource type="AudioStream" uid="uid://cmanxvokuibnl" path="res://Audio/MOSH! Battle Theme.mp3" id="11_trwdl"]
 [ext_resource type="Script" path="res://Utility/snd_music.gd" id="12_hrfev"]
+[ext_resource type="PackedScene" uid="uid://g0is25mkdcvm" path="res://Scenes/frame_saver.tscn" id="13_qpmk5"]
 
 [sub_resource type="Resource" id="Resource_hrmut"]
 script = ExtResource("5_qgr7d")
@@ -124,5 +125,7 @@ volume_db = -30.0
 pitch_scale = 0.75
 autoplay = true
 script = ExtResource("12_hrfev")
+
+[node name="FrameSaver" parent="." instance=ExtResource("13_qpmk5")]
 
 [connection signal="player_death" from="Player" to="snd_music" method="_on_player_player_death"]
