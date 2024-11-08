@@ -90,7 +90,7 @@ var enemy_close = []
 signal player_death()
 
 func _ready() -> void:
-	upgrade_character("flamethrower1") #start off with a weapon
+	upgrade_character("icespear1") #start off with a weapon
 	_on_hurtbox_hurt(0, 0, 0)
 	attack()
 	set_expbar(experience, calculate_experience_cap())
@@ -201,7 +201,7 @@ func _on_flamethrower_timer_timeout() -> void:
 
 func _on_flamethrower_attack_timer_timeout() -> void:
 	if flamethrower_ammo > 0:
-		var target = get_random_target()
+		var target = get_closest_target() #targets closest
 		var flamethrower_attack = flamethrower.instantiate()
 		flamethrower_attack.position = position
 		flamethrower_attack.target = target
@@ -232,6 +232,23 @@ func get_random_target():
 		return enemy_close.pick_random().global_position
 	else:
 		return Vector2.UP
+		
+func get_closest_target() -> Vector2:
+	if enemy_close.size() > 0:
+		return get_closest_enemy(global_position, enemy_close).global_position
+	else:
+		return Vector2.UP
+
+func get_closest_enemy(current_position: Vector2, enemies):
+	var closest_enemy = null
+	var closest_distance:float = 1e20  # Initialize with a large number
+	
+	for enemy in enemies:
+		var distance = current_position.distance_to(enemy.global_position)
+		if distance < closest_distance:
+			closest_distance = distance
+			closest_enemy = enemy	
+	return closest_enemy
 		
 func calculate_experience(gem_exp):
 	var exp_required = calculate_experience_cap()

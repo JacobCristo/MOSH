@@ -15,6 +15,7 @@ var angle_more = Vector2.ZERO
 signal remove_from_array(object)
 
 @onready var player = get_tree().get_first_node_in_group("player")
+@onready var particles: CPUParticles2D = $CPUParticles2D
 
 func _ready() -> void:
 	match level:

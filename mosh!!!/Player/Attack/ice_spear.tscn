@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://junmp30s8rm1"]
+[gd_scene load_steps=15 format=3 uid="uid://junmp30s8rm1"]
 
 [ext_resource type="Texture2D" uid="uid://c6754hkftl281" path="res://Assets/Weapons/MOSH_IceSpear.png" id="1_iefkn"]
 [ext_resource type="Script" path="res://Player/Attack/ice_spear.gd" id="1_mdl3i"]
@@ -64,9 +64,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oum8q"]
 size = Vector2(9.33333, 18.3746)
 
+[sub_resource type="Curve" id="Curve_rnlhq"]
+min_value = -1.0
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [node name="IceSpear" type="Area2D" groups=["attacj", "attack"]]
 top_level = true
-scale = Vector2(0.1, 0.1)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_mdl3i")
@@ -77,6 +81,7 @@ sprite_frames = SubResource("SpriteFrames_s8ihn")
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-1, -1)
 scale = Vector2(1.5, 1.415)
 shape = SubResource("RectangleShape2D_oum8q")
@@ -96,6 +101,21 @@ autoplay = true
 stream = ExtResource("4_5ghai")
 volume_db = -20.0
 pitch_scale = 3.0
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 16
+lifetime = 0.15
+speed_scale = 0.6
+randomness = 0.86
+emission_shape = 3
+emission_rect_extents = Vector2(4, 12)
+gravity = Vector2(0, 0)
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+color = Color(0.587909, 1, 0.995846, 1)
+hue_variation_min = -0.05
+hue_variation_max = 0.05
+hue_variation_curve = SubResource("Curve_rnlhq")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="finished" from="snd_break" to="." method="_on_snd_break_finished"]

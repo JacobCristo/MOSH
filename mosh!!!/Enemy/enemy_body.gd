@@ -52,6 +52,7 @@ func death():
 	snd_death.play()
 	emit_signal("remove_from_array", self)
 	hurtbox.set_deferred("monitoring", false)
+	hitbox.set_deferred("monitoring", false)
 	var new_gem = exp_gem.instantiate()
 	new_gem.global_position = global_position
 	new_gem.experience = experience

@@ -25,6 +25,8 @@ var sprite_javelin_attack = preload("res://Assets/Weapons/MOSH_Javelin_Attack.pn
 @onready var changeDirectionTimer = get_node("%ChangeDirectionTimer")
 @onready var resetPosTimer = get_node("%ResetPosTimer")
 @onready var snd_attack = $snd_attack
+@onready var passive_particles: CPUParticles2D = $PassiveParticles
+@onready var active_particles: CPUParticles2D = $ActiveParticles
 
 signal remove_from_array(object)
 
@@ -82,6 +84,8 @@ func _physics_process(delta: float) -> void:
 			return_speed = 100
 		position += player_angle * return_speed * delta
 		rotation = global_position.direction_to(player.global_position).angle() + deg_to_rad(45)
+		passive_particles.rotation = rotation
+		active_particles.rotation = rotation
 	
 func add_paths():
 	snd_attack.play()
@@ -108,9 +112,13 @@ func enable_attack(atk = true):
 	if atk:
 		collision.call_deferred("set", "disabled", false)
 		sprite.texture = sprite_javelin_attack
+		active_particles.emitting = true
+		passive_particles.emitting = false
 	else:
 		collision.call_deferred("set", "disabled", true)
 		sprite.texture = sprite_javelin_regular
+		active_particles.emitting = false
+		passive_particles.emitting = true
 	
 func _on_attack_timer_timeout() -> void:
 	add_paths()

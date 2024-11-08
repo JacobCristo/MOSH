@@ -9,6 +9,8 @@ extends Node2D
 var enemy_cap = 500
 var enemies_to_spawn = []
 
+const Reaper = preload("res://Enemy/reaper.gd")
+
 signal change_time(time)
 
 func _ready():
@@ -25,9 +27,14 @@ func _on_timer_timeout() -> void:
 			else:
 				i.spawn_delay_counter = 0
 				var new_enemy = load(str(i.enemy.resource_path))
+				#print(i.enemy)
 				var counter = 0 
 				while counter < i.enemy_number:
-					if my_children.size() <= enemy_cap:
+					if new_enemy is Reaper:
+						var enemy_spawn = new_enemy.instantiate()
+						enemy_spawn.global_position = get_random_position()
+						add_child(enemy_spawn)
+					elif my_children.size() <= enemy_cap:
 						var enemy_spawn = new_enemy.instantiate()
 						enemy_spawn.global_position = get_random_position()
 						add_child(enemy_spawn)

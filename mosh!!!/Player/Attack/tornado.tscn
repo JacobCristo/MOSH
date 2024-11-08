@@ -9,7 +9,6 @@ size = Vector2(14, 16)
 
 [node name="Tornado" type="Area2D" groups=["attack"]]
 top_level = true
-scale = Vector2(0.1, 0.1)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_etdwg")
@@ -31,5 +30,16 @@ stream = ExtResource("3_vwypx")
 volume_db = -30.0
 pitch_scale = 5.0
 autoplay = true
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 64
+lifetime = 0.25
+speed_scale = 0.3
+randomness = 0.86
+emission_shape = 1
+emission_sphere_radius = 25.53
+gravity = Vector2(0, 100)
+scale_amount_min = 2.0
+scale_amount_max = 2.0
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
