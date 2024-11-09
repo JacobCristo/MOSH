@@ -1,0 +1,110 @@
+[gd_scene load_steps=14 format=3 uid="uid://srrxs2f28uew"]
+
+[ext_resource type="Script" path="res://Player/Attack/magic_missile.gd" id="1_svx1u"]
+[ext_resource type="Texture2D" uid="uid://bpdff70ndyd8f" path="res://Assets/Weapons/MOSH_MagicMissile-Hit_Sheet.png" id="2_tgcot"]
+[ext_resource type="Texture2D" uid="uid://dx2ciek20hldd" path="res://Assets/Weapons/MOSH_MagicMissile.png" id="3_pmync"]
+[ext_resource type="AudioStream" uid="uid://exgj7fbebq4y" path="res://Audio/icespear_break.mp3" id="4_dspra"]
+[ext_resource type="AudioStream" uid="uid://b354a8f6np612" path="res://Audio/magic_missile_cast.mp3" id="5_x4gnk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wxdv7"]
+atlas = ExtResource("2_tgcot")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hiivd"]
+atlas = ExtResource("2_tgcot")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onust"]
+atlas = ExtResource("2_tgcot")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aumlg"]
+atlas = ExtResource("2_tgcot")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_obbtv"]
+atlas = ExtResource("2_tgcot")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhp5m"]
+atlas = ExtResource("3_pmync")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_trdp7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wxdv7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hiivd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onust")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aumlg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_obbtv")
+}],
+"loop": false,
+"name": &"break",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhp5m")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5ivtp"]
+radius = 14.0357
+
+[node name="MagicMissile" type="Area2D" groups=["attack"]]
+top_level = true
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_svx1u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_trdp7")
+animation = &"break"
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CircleShape2D_5ivtp")
+
+[node name="snd_hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_dspra")
+volume_db = -20.0
+pitch_scale = 3.0
+
+[node name="snd_cast" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_x4gnk")
+volume_db = -25.0
+pitch_scale = 3.0
+autoplay = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 7.5
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+amount = 32
+lifetime = 0.15
+speed_scale = 0.3
+randomness = 0.86
+emission_shape = 1
+emission_sphere_radius = 13.8
+gravity = Vector2(0, 0)
+color = Color(0.560784, 0.992157, 0.14902, 1)
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="finished" from="snd_hit" to="." method="_on_snd_hit_finished"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

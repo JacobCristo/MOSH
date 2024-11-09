@@ -25,13 +25,13 @@ func _ready() -> void:
 		1, 2:
 			hp = 1
 			speed = 300
-			damage = 5
+			damage = 10
 			knock_amount = 200
 			attack_size = 1.0 * (1 + player.spell_size)
 		3, 4:
 			hp = 2
 			speed = 300
-			damage = 8
+			damage = 15
 			knock_amount = 200
 			attack_size = 1.0 * (1 + player.spell_size)
 	var tween = create_tween()

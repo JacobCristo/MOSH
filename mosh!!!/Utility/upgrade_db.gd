@@ -100,6 +100,38 @@ const UPGRADES = {
 		"prerequisite": ["flamethrower3"],
 		"type": "weapon"
 	},
+	"magic_missile1": {
+		"icon": WEAPON_PATH + "MOSH_MagicMissile.png",
+		"display_name": "Magic Missile",
+		"details": "A trio of homing projectiles are shot at enemies",
+		"level": "Level: 1",
+		"prerequisite": [],
+		"type": "weapon"
+	},
+	"magic_missile2": {
+		"icon": WEAPON_PATH + "MOSH_MagicMissile.png",
+		"display_name": "Magic Missile",
+		"details": "Missiles do more damage",
+		"level": "Level: 2",
+		"prerequisite": ["magic_missile1"],
+		"type": "weapon"
+	},
+	"magic_missile3": {
+		"icon": WEAPON_PATH + "MOSH_MagicMissile.png",
+		"display_name": "Magic Missile",
+		"details": "Missiles pierce two additional enemies",
+		"level": "Level: 3",
+		"prerequisite": ["magic_missile2"],
+		"type": "weapon"
+	},
+	"magic_missile4": {
+		"icon": WEAPON_PATH + "MOSH_MagicMissile.png",
+		"display_name": "Magic Missile",
+		"details": "Even more missiles which deal even more damage and move significantly faster",
+		"level": "Level: 4",
+		"prerequisite": ["magic_missile3"],
+		"type": "weapon"
+	},
 	"javelin1": {
 		"icon": WEAPON_PATH + "MOSH_Javelin.png",
 		"display_name": "Javelin",

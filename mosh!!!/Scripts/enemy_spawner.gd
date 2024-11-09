@@ -30,11 +30,11 @@ func _on_timer_timeout() -> void:
 				#print(i.enemy)
 				var counter = 0 
 				while counter < i.enemy_number:
-					if new_enemy is Reaper:
+					if my_children.size() <= enemy_cap:
 						var enemy_spawn = new_enemy.instantiate()
 						enemy_spawn.global_position = get_random_position()
 						add_child(enemy_spawn)
-					elif my_children.size() <= enemy_cap:
+					elif new_enemy is Reaper:
 						var enemy_spawn = new_enemy.instantiate()
 						enemy_spawn.global_position = get_random_position()
 						add_child(enemy_spawn)

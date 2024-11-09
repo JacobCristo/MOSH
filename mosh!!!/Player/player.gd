@@ -16,6 +16,7 @@ var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
 var fireball = preload("res://Player/Attack/fireball.tscn")
 var flamethrower = preload("res://Player/Attack/flamethrower.tscn")
+var magicmissile = preload("res://Player/Attack/magic_missile.tscn")
 
 #Attack Nodes
 @onready var iceSpearTimer = get_node("%IceSpearTimer")
@@ -27,6 +28,9 @@ var flamethrower = preload("res://Player/Attack/flamethrower.tscn")
 @onready var fireballAttackTimer = get_node("%FireballAttackTimer")
 @onready var flamethrowerTimer = get_node("%FlamethrowerTimer")
 @onready var flamethrowerAttackTimer = get_node("%FlamethrowerAttackTimer")
+@onready var magicmissileTimer = get_node("%MagicMissileTimer")
+@onready var magicmissileAttackTimer = get_node("%MagicMissileAttackTimer")
+
 #Upgrades
 var collected_upgrades = []
 var upgrade_options = []
@@ -45,7 +49,7 @@ var icespear_level = 0
 #Tornado
 var tornado_ammo = 0
 var tornado_baseammo = 0
-var tornado_attackspeed = 5
+var tornado_attackspeed = 5.0
 var tornado_level = 0
 
 #Javelin
@@ -63,6 +67,12 @@ var flamethrower_ammo = 0
 var flamethrower_baseammo = 0
 var flamethrower_attackspeed = 0.25
 var flamethrower_level = 0
+
+#Magic Missile
+var magicmissile_ammo = 0
+var magicmissile_baseammo = 0
+var magicmissile_attackspeed = 2.0
+var magicmissile_level = 0
 
 #Enemy Related
 var enemy_close = []
@@ -90,7 +100,10 @@ var enemy_close = []
 signal player_death()
 
 func _ready() -> void:
-	upgrade_character("icespear1") #start off with a weapon
+	upgrade_character("magic_missile1") #start off with a weapon
+	#upgrade_character("magic_missile2") #for starting with higher level weapons
+	#upgrade_character("magic_missile3")
+	#upgrade_character("magic_missile4")
 	_on_hurtbox_hurt(0, 0, 0)
 	attack()
 	set_expbar(experience, calculate_experience_cap())
@@ -135,6 +148,10 @@ func attack():
 		flamethrowerTimer.wait_time = flamethrower_attackspeed * (1 - spell_cooldown)
 		if flamethrowerTimer.is_stopped():
 			flamethrowerTimer.start()
+	if magicmissile_level > 0:
+		magicmissileTimer.wait_time = magicmissile_attackspeed #not affected by spell cooldown
+		if magicmissileTimer.is_stopped():
+			magicmissileTimer.start()
 			
 func _on_hurtbox_hurt(damage: Variant, _angle:Variant, _knockback:Variant) -> void:
 	hp -= clamp(damage - armor, 1, 999) #guarantee at least one damage
@@ -181,7 +198,6 @@ func _on_fireball_timer_timeout() -> void:
 	fireball_ammo += fireball_baseammo + additional_attacks
 	fireballAttackTimer.start()
 
-
 func _on_fireball_attack_timer_timeout() -> void:
 	if fireball_ammo > 0:
 		var fireball_attack = fireball.instantiate()
@@ -213,6 +229,27 @@ func _on_flamethrower_attack_timer_timeout() -> void:
 		else:
 			flamethrowerAttackTimer.stop()
 			
+func _on_magic_missile_timer_timeout() -> void:
+	magicmissile_ammo += magicmissile_baseammo + additional_attacks
+	magicmissileAttackTimer.start()
+
+func _on_magic_missile_attack_timer_timeout() -> void:
+	if magicmissile_ammo > 0:
+		var magicmissile_attack = magicmissile.instantiate()
+		magicmissile_attack.position = position
+		magicmissile_attack.enemy_target = get_random_enemy()
+		if not magicmissile_attack.enemy_target == null:
+			magicmissile_attack.target = magicmissile_attack.enemy_target.global_position
+			magicmissile_attack.level = magicmissile_level
+			add_child(magicmissile_attack)
+			magicmissile_ammo -= 1
+			if magicmissile_ammo > 0:
+				magicmissileAttackTimer.start()
+			else:
+				magicmissileAttackTimer.stop()
+		else:
+			magicmissile_ammo = magicmissile_baseammo #keep it from queueing when there's nothing to hit
+			
 func spawn_javelin():
 	var get_javelin_total = javelin_base.get_child_count()
 	var calc_spawns = (javelin_ammo + additional_attacks) - get_javelin_total
@@ -232,6 +269,12 @@ func get_random_target():
 		return enemy_close.pick_random().global_position
 	else:
 		return Vector2.UP
+		
+func get_random_enemy():
+	if enemy_close.size() > 0:
+		return enemy_close.pick_random()
+	else:
+		return null
 		
 func get_closest_target() -> Vector2:
 	if enemy_close.size() > 0:
@@ -350,6 +393,16 @@ func upgrade_character(upgrade):
 			flamethrower_level = 3
 		"flamethrower4":
 			flamethrower_level = 4
+		"magic_missile1":
+			magicmissile_level = 1
+			magicmissile_baseammo = 3
+		"magic_missile2":
+			magicmissile_level = 2
+		"magic_missile3":
+			magicmissile_level = 3
+		"magic_missile4":
+			magicmissile_level = 4
+			magicmissile_baseammo = 5
 		"armor1","armor2","armor3","armor4":
 			armor += 1
 		"speed1","speed2","speed3","speed4":
