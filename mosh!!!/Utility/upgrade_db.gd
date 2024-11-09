@@ -36,36 +36,36 @@ const UPGRADES = {
 		"prerequisite": ["icespear3"],
 		"type": "weapon"
 	},
-	"fireball1": {
-		"icon": WEAPON_PATH + "MOSH_Fireball.png",
-		"display_name": "Fireball",
-		"details": "Balls of fire are rapidly thrown at a random enemy",
+	"boulder1": {
+		"icon": WEAPON_PATH + "MOSH_Boulder.png",
+		"display_name": "Boulder",
+		"details": "Massive boulders slam in enemies and hit large groups",
 		"level": "Level: 1",
 		"prerequisite": [],
 		"type": "weapon"
 	},
-	"fireball2": {
-		"icon": WEAPON_PATH + "MOSH_Fireball.png",
-		"display_name": "Fireball",
-		"details": "An addition Fireball is thrown",
+	"boulder2": {
+		"icon": WEAPON_PATH + "MOSH_Boulder.png",
+		"display_name": "Boulder",
+		"details": "An additional boulder is thrown",
 		"level": "Level: 2",
-		"prerequisite": ["fireball1"],
+		"prerequisite": ["boulder1"],
 		"type": "weapon"
 	},
-	"fireball3": {
-		"icon": WEAPON_PATH + "MOSH_Fireball.png",
-		"display_name": "Fireball",
-		"details": "Fireballs now do 8 damage",
+	"boulder3": {
+		"icon": WEAPON_PATH + "MOSH_Boulder.png",
+		"display_name": "Boulder",
+		"details": "Boulders now do more damage",
 		"level": "Level: 3",
-		"prerequisite": ["fireball2"],
+		"prerequisite": ["boulder2"],
 		"type": "weapon"
 	},
-	"fireball4": {
-		"icon": WEAPON_PATH + "MOSH_Fireball.png",
-		"display_name": "Ice Spear",
-		"details": "An additional 2 Fireballs are thrown",
+	"boulder4": {
+		"icon": WEAPON_PATH + "MOSH_Boulder.png",
+		"display_name": "Boulder",
+		"details": "An additional 2 boulders are thrown",
 		"level": "Level: 4",
-		"prerequisite": ["fireball3"],
+		"prerequisite": ["boulder3"],
 		"type": "weapon"
 	},
 	"flamethrower1": {

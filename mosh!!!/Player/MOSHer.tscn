@@ -152,10 +152,10 @@ wait_time = 0.05
 [node name="JavelinBase" type="Node2D" parent="Attack"]
 unique_name_in_owner = true
 
-[node name="FireballTimer" type="Timer" parent="Attack"]
+[node name="BoulderTimer" type="Timer" parent="Attack"]
 unique_name_in_owner = true
 
-[node name="FireballAttackTimer" type="Timer" parent="Attack/FireballTimer"]
+[node name="BoulderAttackTimer" type="Timer" parent="Attack/BoulderTimer"]
 unique_name_in_owner = true
 wait_time = 0.1
 
@@ -334,8 +334,8 @@ text = "Menu"
 [connection signal="timeout" from="Attack/IceSpearTimer/IceSpearAttackTimer" to="." method="_on_ice_spear_attack_timer_timeout"]
 [connection signal="timeout" from="Attack/TornadoTimer" to="." method="_on_tornado_timer_timeout"]
 [connection signal="timeout" from="Attack/TornadoTimer/TornadoAttackTimer" to="." method="_on_tornado_attack_timer_timeout"]
-[connection signal="timeout" from="Attack/FireballTimer" to="." method="_on_fireball_timer_timeout"]
-[connection signal="timeout" from="Attack/FireballTimer/FireballAttackTimer" to="." method="_on_fireball_attack_timer_timeout"]
+[connection signal="timeout" from="Attack/BoulderTimer" to="." method="_on_boulder_timer_timeout"]
+[connection signal="timeout" from="Attack/BoulderTimer/BoulderAttackTimer" to="." method="_on_boulder_attack_timer_timeout"]
 [connection signal="timeout" from="Attack/FlamethrowerTimer" to="." method="_on_flamethrower_timer_timeout"]
 [connection signal="timeout" from="Attack/FlamethrowerTimer/FlamethrowerAttackTimer" to="." method="_on_flamethrower_attack_timer_timeout"]
 [connection signal="timeout" from="Attack/MagicMissileTimer" to="." method="_on_magic_missile_timer_timeout"]

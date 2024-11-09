@@ -14,7 +14,7 @@ var max_hp = 80
 var iceSpear = preload("res://Player/Attack/ice_spear.tscn")
 var tornado = preload("res://Player/Attack/tornado.tscn")
 var javelin = preload("res://Player/Attack/javelin.tscn")
-var fireball = preload("res://Player/Attack/fireball.tscn")
+var boulder = preload("res://Player/Attack/boulder.tscn")
 var flamethrower = preload("res://Player/Attack/flamethrower.tscn")
 var magicmissile = preload("res://Player/Attack/magic_missile.tscn")
 
@@ -24,8 +24,8 @@ var magicmissile = preload("res://Player/Attack/magic_missile.tscn")
 @onready var tornadoTimer = get_node("%TornadoTimer")
 @onready var tornadoAttackTimer = get_node("%TornadoAttackTimer")
 @onready var javelin_base = get_node("%JavelinBase")
-@onready var fireballTimer = get_node("%FireballTimer")
-@onready var fireballAttackTimer = get_node("%FireballAttackTimer")
+@onready var boulderTimer = get_node("%BoulderTimer")
+@onready var boulderAttackTimer = get_node("%BoulderAttackTimer")
 @onready var flamethrowerTimer = get_node("%FlamethrowerTimer")
 @onready var flamethrowerAttackTimer = get_node("%FlamethrowerAttackTimer")
 @onready var magicmissileTimer = get_node("%MagicMissileTimer")
@@ -56,11 +56,11 @@ var tornado_level = 0
 var javelin_ammo = 0
 var javelin_level = 0
 
-#Fireball
-var fireball_ammo = 0
-var fireball_baseammo = 0
-var fireball_attackspeed = 0.75
-var fireball_level = 0
+#Boulder
+var boulder_ammo = 0
+var boulder_baseammo = 0
+var boulder_attackspeed = 2.5
+var boulder_level = 0
 
 #Flamethrower
 var flamethrower_ammo = 0
@@ -100,7 +100,7 @@ var enemy_close = []
 signal player_death()
 
 func _ready() -> void:
-	upgrade_character("magic_missile1") #start off with a weapon
+	upgrade_character("boulder1") #start off with a weapon
 	#upgrade_character("magic_missile2") #for starting with higher level weapons
 	#upgrade_character("magic_missile3")
 	#upgrade_character("magic_missile4")
@@ -140,10 +140,10 @@ func attack():
 			tornadoTimer.start()	
 	if javelin_level > 0:
 		spawn_javelin()
-	if fireball_level > 0:
-		fireballTimer.wait_time = fireball_attackspeed * (1 - spell_cooldown)
-		if fireballTimer.is_stopped():
-			fireballTimer.start()
+	if boulder_level > 0:
+		boulderTimer.wait_time = boulder_attackspeed * (1 - spell_cooldown)
+		if boulderTimer.is_stopped():
+			boulderTimer.start()
 	if flamethrower_level > 0:
 		flamethrowerTimer.wait_time = flamethrower_attackspeed * (1 - spell_cooldown)
 		if flamethrowerTimer.is_stopped():
@@ -194,22 +194,22 @@ func _on_tornado_attack_timer_timeout() -> void:
 		else:
 			tornadoAttackTimer.stop()
 			
-func _on_fireball_timer_timeout() -> void:
-	fireball_ammo += fireball_baseammo + additional_attacks
-	fireballAttackTimer.start()
+func _on_boulder_timer_timeout() -> void:
+	boulder_ammo += boulder_baseammo + additional_attacks
+	boulderAttackTimer.start()
 
-func _on_fireball_attack_timer_timeout() -> void:
-	if fireball_ammo > 0:
-		var fireball_attack = fireball.instantiate()
-		fireball_attack.position = position
-		fireball_attack.target = get_random_target()
-		fireball_attack.level = fireball_level
-		add_child(fireball_attack)
-		fireball_ammo -= 1
-		if fireball_ammo > 0:
-			fireballAttackTimer.start()
+func _on_boulder_attack_timer_timeout() -> void:
+	if boulder_ammo > 0:
+		var boulder_attack = boulder.instantiate()
+		boulder_attack.position = position
+		boulder_attack.target = get_random_target()
+		boulder_attack.level = boulder_level
+		add_child(boulder_attack)
+		boulder_ammo -= 1
+		if boulder_ammo > 0:
+			boulderAttackTimer.start()
 		else:
-			fireballAttackTimer.stop()
+			boulderAttackTimer.stop()
 
 func _on_flamethrower_timer_timeout() -> void:
 	flamethrower_ammo += flamethrower_baseammo + additional_attacks
@@ -373,17 +373,17 @@ func upgrade_character(upgrade):
 			javelin_level = 3
 		"javelin4":
 			javelin_level = 4
-		"fireball1":
-			fireball_level = 1
-			fireball_baseammo = 1
-		"fireball2":
-			fireball_level = 2
-			fireball_baseammo += 1
-		"fireball3":
-			fireball_level = 3
-		"fireball4":
-			fireball_level = 4
-			fireball_baseammo += 2
+		"boulder1":
+			boulder_level = 1
+			boulder_baseammo = 1
+		"boulder2":
+			boulder_level = 2
+			boulder_baseammo += 1
+		"boulder3":
+			boulder_level = 3
+		"boulder4":
+			boulder_level = 4
+			boulder_baseammo += 2
 		"flamethrower1":
 			flamethrower_level = 1
 			flamethrower_baseammo = 15
