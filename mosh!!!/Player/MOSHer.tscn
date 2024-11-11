@@ -110,10 +110,12 @@ autoplay = "idle"
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(3, 4)
 shape = SubResource("CapsuleShape2D_w40ld")
 
 [node name="Hurtbox" parent="." instance=ExtResource("4_nhxuu")]
+visible = false
 position = Vector2(-51, 22)
 collision_mask = 2
 
